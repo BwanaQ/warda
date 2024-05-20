@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% load i18n %} 
+
+
+{%block header %}
+    <span class="border-bottom-primary">Address</span>
+{%endblock%}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    
+  </div>
+  <div class="row">
+    <!-- Default Card Example -->
+
+    <div class="card mb-4 col-md-6">
+      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+      <div class="card-subtitle">What is the address of the property?</div>
+      <div class="card-body">
+        <form action="{%url 'create-lease-template' %}" method='post'>
+            {% csrf_token %}
+            {{wizard.management_form}}
+          <div class="form-group">
+            {{ wizard.form.street_address | as_crispy_field }}
+          </div>
+          <div class="form-group">
+            {{ wizard.form.city | as_crispy_field }}
+          </div>
+          <div class="form-group">
+            {{ wizard.form.state | as_crispy_field }}
+          </div>
+          <div class="form-group">
+            {{ wizard.form.zip_code | as_crispy_field }}
+          </div>
+          <button href="#" class="btn btn-primary btn-icon-split" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="text">Prev Step</span>
+        </button>
+          <button href="#" class="btn btn-primary btn-icon-split" type="submit" value="{{ wizard.steps.first }}">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="text">Next Step</span>
+        </button>
+        </form>
+      </div>
+    </div>
+    <div class="mb-4 col-md-5" style="margin-left:20px;">
+        <h3
+        style="font-family:roboto,sans-serif;font-size:16px;text-align:start;line-height:40px;letter-spacing:normal;color:#283250;">
+        What does the premises address include?</h3>
+
+
+      <p
+        style="font-family:roboto,sans-serif;font-size:14px;text-align:start;line-height:21.98px;letter-spacing:normal;opacity:54%;color:#283250;">
+        This is the address and location of the premises being rented or leased out to the tenant(s). Be sure to include any room or apartment number as part of the street address, if it applies to your type of housing. The lease agreement will clearly state what is included as part of the leased or rented premises.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

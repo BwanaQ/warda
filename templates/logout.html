@@ -1,0 +1,14 @@
+
+{% extends '_base.html' %} 
+{% block content %} 
+{% load crispy_forms_tags %}
+<div class="d-flex justify-content-center h-100" style="padding-top: 10%">
+  <div class="card p-3">
+    <h4 class="text-center">You have been successfully logged out.</h2>
+
+    <div class="border-top pt-3">
+      <a class="btn btn-sm btn-primary  text-center" href="{% url 'login' %}">Sign In</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

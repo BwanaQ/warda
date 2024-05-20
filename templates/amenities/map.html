@@ -1,0 +1,62 @@
+<!-- map.html -->
+{% extends 'amenities/_base.html' %}
+{% load static %} <!-- Add this line to load static template tags -->
+
+{% block title %}Map {% endblock %}
+
+{% block content %}
+    <div id="map" style="height: 400px; width: 600px;"></div>
+    <ul>
+        {% for amenity in amenities %}
+            <li>{{ amenity.name }} - {{ amenity.geom_type }} -
+                {% if amenity.geom_type == 'Polygon' %}
+                - Coordinates: {{ amenity.polygon_location.coords }}
+                {% endif %}            
+            </li>
+        {% endfor %}
+    </ul>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+        var defaultIcon = L.icon({
+            iconUrl: '{% static "img/markers/default.png" %}',
+            shadowUrl: '{% static "img/markers/marker-shadow.png" %}',
+
+            iconSize:     [30, 38], // size of the icon
+            shadowSize:   [30, 34], // size of the shadow
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 4],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+        var homeIcon = L.icon({
+            iconUrl: '{% static "img/markers/home.png" %}',
+            shadowUrl: '{% static "img/markers/marker-shadow.png" %}',
+
+            iconSize:     [30, 38], // size of the icon
+            shadowSize:   [30, 34], // size of the shadow
+            iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+            shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var map = L.map('map').setView([{{ ref_latitude }}, {{ ref_longitude }}], 16);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        // Add Home Marker
+        var home = [{{ ref_latitude }}, {{ ref_longitude }}];
+        var homeMarker = L.marker(home, {icon: homeIcon}).addTo(map);
+        {% for amenity in amenities %}
+            {% if amenity.geom_type == 'Polygon' %}
+                var polygonCoords = {{ amenity.polygon_location.geojson|safe }}.coordinates[0].map(function(coord) {
+                    return [coord[1], coord[0]]; // Swap latitude and longitude
+                });
+                var polygon = L.polygon(polygonCoords).addTo(map);
+            {% else %}
+                var latlng = [{{ amenity.point_location.y }}, {{ amenity.point_location.x }}];
+                var marker = L.marker(latlng, {icon: defaultIcon}).addTo(map);
+            {% endif %}
+        {% endfor %}
+    </script>
+{% endblock %}

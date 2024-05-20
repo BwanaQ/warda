@@ -1,0 +1,47 @@
+
+{%extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% comment %} Page Title {% endcomment %}
+{% block title %}
+RMS - Create Amenity
+{% endblock %}
+
+{% comment %} Page Header {% endcomment %}
+{%block header %}
+    <span class="border-bottom-primary">Create Amenity</span>
+{%endblock%}
+
+{% comment %} Page Content {% endcomment %}
+{% block content %}
+<div class="container">
+
+    <div class="o-hidden border-0 shadow-lg my-5">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-4">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <div class="col-lg-4 mb-3 mb-sm-0">
+                                    {{ form.name|as_crispy_field }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    {{ form.description|as_crispy_field }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-user ">Save Amenity</button>
+
+                        </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

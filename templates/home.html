@@ -1,0 +1,18 @@
+{% extends '_base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  <p>Welcome, {{ user.email }}!</p>
+  {% if user.role_type == 'L' or user.role_type == 'A' %}
+  <p><a href="{% url 'building-home' %}">Manage Portfolio</a></p>
+  <p><a href="#">Manage Leases</a></p>
+  {% endif %}
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a> |
+  <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+{% endblock %}

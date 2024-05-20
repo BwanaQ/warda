@@ -1,0 +1,85 @@
+
+<!--Extend from base html-->
+{% extends 'base.html' %}
+
+<!--Include Flash Messages-->
+{% include 'messages.html' %}
+
+
+<!-- Page Title -->
+{% block title %}
+RMS - Service PRO Jobs
+{% endblock %}
+
+
+
+<!-- Page Heading -->
+{%block header %}
+    <span class="border-bottom-primary">Jobs</span>
+{%endblock%}
+
+<!-- Begin Page Content -->
+{% block content %}
+
+<div class="container-fluid">
+  <!-- <p class="mb-4">
+    This shows a list of all service requests created in the system.
+
+  </p> -->
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <!-- <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">All Service Requests</h6>
+    </div> -->
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Unit</th>
+              <th>Building</th>
+              <th>Subject</th>
+              <th>Description</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Unit</th>
+              <th>Building</th>
+              <th>Subject</th>
+              <th>Description</th>
+              <th>Location</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for service_request in job_list %}
+            <tr>
+              <td>{{service_request.unit.name}}</td>
+              <td>{{service_request.unit.building.name}}</td>
+              <td>{{service_request.subject |truncatewords:1}}</td>
+              <td>{{service_request.description |truncatewords:1}}</td>
+              <td>{{service_request.building.location}}</td>
+              <td >
+                <div class="btn-group" role="group" aria-label="Basic example" >
+                    <a href="{% url 'service-pro-job-detail' service_request.id %}"><button type="button" class="btn btn-primary btn-sm mr-1"><i class="far fa-eye"></i> </button></a>
+                    <a href=""><button type="button" class="btn btn-info btn-sm mr-1"><i class="far fa-envelope"></i> send proposal</button></a>
+                    <a href=""><button type="button" class="btn btn-success btn-sm mr-1"><i class="fas fa-phone"></i> call landlord</button></a>
+                </div> 
+            </td>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

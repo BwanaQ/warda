@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Warda Project | {% block title %}{% endblock %}</title>
+    <!-- Include any common CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Include Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Include Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+</head>
+<body>
+    <header>
+        <h1>Hello Warda</h1>
+        <!-- Include any common navigation bar or header content -->
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <!-- Include any common footer content -->
+        <p>&copy; 2024 The Warda Project</p>
+    </footer>
+
+    <!-- Include any common JavaScript -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <!-- Include Leaflet JavaScript -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+</body>
+</html>

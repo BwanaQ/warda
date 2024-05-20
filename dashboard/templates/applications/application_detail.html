@@ -1,0 +1,55 @@
+{% extends 'base.html' %} {% comment %} Page Title {% endcomment %} 
+
+
+{% block title %} RMS - Application Detail {% endblock %}
+
+<!-- Page Heading -->
+{%block header %}
+<span class="border-bottom-primary">Application Detail</span>
+{%endblock%} 
+
+
+{% block content %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- Circle Buttons -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">{{application.tenant.email}} - {{application.unit.name}} Lease</h6>
+        </div>
+        <div class="card-body">
+            <p>Status: {{application.status}}</p>
+            <p>Staff: {{application.staff}}</p>
+            <p>Status: {{application.status}}</p>
+            <p>Date Created: {{application.date_created}}</p>
+            <p>Date Approved: {{application.date_approved}}</p>
+            <p>Date Denied: {{application.date_denied}}</p>
+            <p>Date Cancelled: {{application.date_cancelled}}</p>
+            <p>Date Completed: {{application.date_completed}}</p>
+            <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{% url 'application-list' %}"><button type="button" class="btn btn-primary btn-sm mr-1"><i class="far fa-list-alt"></i></button></a>
+            <a href="{% url 'update-application' application.id %}"
+              ><button type="button" class="btn btn-success btn-sm mr-1">
+                <i class="fas fa-edit"></i></button
+            ></a>
+            <a href="{% url 'delete-application' application.id %}"
+              ><button type="button" class="btn btn-danger btn-sm">
+                <i class="far fa-trash-alt"></i></button
+            ></a>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-success btn-sm ml-4">Lease Unit</button>
+
+          <button type="submit" class="btn btn-warning btn-sm ml-4">Decline Application</button>
+
+          <button type="submit" class="btn btn-danger btn-sm ml-4">Terminate Lease</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+{%endblock%}

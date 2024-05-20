@@ -1,0 +1,78 @@
+
+<!--Extend from base html-->
+{% extends 'base.html' %}
+
+<!--Include Flash Messages-->
+{% include 'messages.html' %} 
+
+
+<!-- Page Title -->
+{% block title %}
+RMS - Application List
+{% endblock %}
+
+
+
+<!-- Page Heading -->
+{%block header %}
+    <span class="border-bottom-primary">Application List</span>
+{%endblock%} 
+
+<!-- Begin Page Content -->
+{% block content %}
+
+<div class="container-fluid">
+  <p class="mb-4">
+    This shows a list of all applications created in the system.
+
+  </p>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">All Applications</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Application</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Application</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for application in application_list %}
+            <tr>
+              <td>{{application.tenant.email}} - {{application.unit.name}}</td>
+              <td>{{application.status}}</td>
+              <td >
+                {% comment %} <a href="{% url 'create_application' %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'create_application' %}" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+                <div class="btn-group" role="group" aria-label="Basic example" >
+                    <a href="{% url 'application-detail' application.id %}"><button type="button" class="btn btn-primary btn-sm mr-1"><i class="far fa-eye"></i></button></a>
+                    <a href="{% url 'update-application' application.id %}"><button type="button" class="btn btn-success btn-sm mr-1"><i class="fas fa-edit"></i></button></a>
+                    <a href="{% url 'delete-application' application.id %}"><button type="button" class="btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button></a>
+                </div>
+            </td>
+            {% endfor %} 
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>
+    {% block title %}
+    {% endblock %}
+  </title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{% static 'dashboard_statics/vendor/fontawesome-free/css/all.min.css' %} " rel="stylesheet"
+    type="text/css" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet" />
+
+  <!-- Custom styles for this template-->
+  <link href="{% static 'dashboard_statics/css/sb-admin-2.min.css' %}" rel="stylesheet" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
+
+  <style>
+    .d-none {
+      display: none !important;
+    }
+
+    /*custom font*/
+    @import url(https://fonts.googleapis.com/css?family=Montserrat);
+
+    /*basic reset*/
+
+
+    #msform fieldset {
+      background: white;
+      border: 0 none;
+      border-radius: 0px;
+      box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+      padding: 20px 30px;
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0;
+
+      /*stacking fieldsets above each other*/
+      position: relative;
+    }
+
+    /*Hide all except first fieldset*/
+    #msform fieldset:not(:first-of-type) {
+      display: none;
+    }
+
+    /*inputs*/
+    #msform input,
+    #msform textarea {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 0px;
+      margin-bottom: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      font-family: montserrat;
+      color: #2C3E50;
+      font-size: 13px;
+    }
+
+    #msform input:focus,
+    #msform textarea:focus {
+      -moz-box-shadow: none !important;
+      -webkit-box-shadow: none !important;
+      box-shadow: none !important;
+      border: 1px solid #ee0979;
+      outline-width: 0;
+      transition: All 0.5s ease-in;
+      -webkit-transition: All 0.5s ease-in;
+      -moz-transition: All 0.5s ease-in;
+      -o-transition: All 0.5s ease-in;
+    }
+
+    /*buttons*/
+    #msform .action-button {
+      width: 100px;
+      background: #ee0979;
+      font-weight: bold;
+      color: white;
+      border: 0 none;
+      border-radius: 25px;
+      cursor: pointer;
+      padding: 10px 5px;
+      margin: 10px 5px;
+    }
+
+    #msform .action-button:hover,
+    #msform .action-button:focus {
+      box-shadow: 0 0 0 2px white, 0 0 0 3px #ee0979;
+    }
+
+    #msform .action-button-previous {
+      width: 100px;
+      background: #C5C5F1;
+      font-weight: bold;
+      color: white;
+      border: 0 none;
+      border-radius: 25px;
+      cursor: pointer;
+      padding: 10px 5px;
+      margin: 10px 5px;
+    }
+
+    #msform .action-button-previous:hover,
+    #msform .action-button-previous:focus {
+      box-shadow: 0 0 0 2px white, 0 0 0 3px #C5C5F1;
+    }
+
+    /*headings*/
+    .fs-title {
+      font-size: 18px;
+      text-transform: uppercase;
+      color: #2C3E50;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      font-weight: bold;
+    }
+
+    .fs-subtitle {
+      font-weight: normal;
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    /*progressbar*/
+    #progressbar {
+      margin-bottom: 30px;
+      overflow: hidden;
+      /*CSS counters to number the steps*/
+      counter-reset: step;
+    }
+
+    #progressbar li {
+      list-style-type: none;
+      color: black;
+      text-transform: uppercase;
+      font-size: 9px;
+      width: 33.33%;
+      float: left;
+      position: relative;
+      letter-spacing: 1px;
+
+    }
+
+    #progressbar li:before {
+      content: counter(step);
+      counter-increment: step;
+      width: 24px;
+      height: 24px;
+      line-height: 26px;
+      display: block;
+      font-size: 12px;
+      color: #333;
+      background: white;
+      border-radius: 25px;
+      padding-left: 8px;
+    }
+
+    /*progressbar connectors*/
+    #progressbar li:after {
+      content: '';
+      width: 100%;
+      height: 2px;
+      background: white;
+      position: absolute;
+      left: -50%;
+      top: 9px;
+      z-index: -1;
+      /*put it behind the numbers*/
+    }
+
+    #progressbar li:first-child:after {
+      /*connector not needed before the first step*/
+      content: none;
+    }
+
+    /*marking active/completed steps green*/
+    /*The number of the step and the connector before it = green*/
+    #progressbar li.active:before,
+    #progressbar li.active:after {
+      background: #ee0979;
+      color: white;
+    }
+
+
+
+
+    /* Radio */
+    @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
+
+
+
+
+    .plans {
+      display: flex;
+      justify-content: space-between;
+      max-width: auto;
+      padding: 85px 50px;
+      background: #fff;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .plans .plan input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .plans .plan {
+      cursor: pointer;
+      width: 48.5%;
+    }
+
+    .plans .plan .plan-content {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      padding: 30px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      border: 2px solid #e1e2e7;
+      border-radius: 10px;
+      -webkit-transition: -webkit-box-shadow 0.4s;
+      transition: -webkit-box-shadow 0.4s;
+      -o-transition: box-shadow 0.4s;
+      transition: box-shadow 0.4s;
+      transition: box-shadow 0.4s, -webkit-box-shadow 0.4s;
+      position: relative;
+    }
+
+    .plans .plan .plan-content img {
+      margin-right: 30px;
+      height: 72px;
+    }
+
+    .plans .plan .plan-details span {
+      margin-bottom: 10px;
+      display: block;
+      font-size: 20px;
+      line-height: 24px;
+      color: #252f42;
+    }
+
+    .container .title {
+      font-size: 16px;
+      font-weight: 500;
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+      color: #252f42;
+      margin-bottom: 20px;
+    }
+
+    .plans .plan .plan-details p {
+      color: #646a79;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .plans .plan .plan-content:hover {
+      -webkit-box-shadow: 0px 3px 5px 0px #e8e8e8;
+      box-shadow: 0px 3px 5px 0px #e8e8e8;
+    }
+
+    .plans .plan input[type="radio"]:checked+.plan-content:after {
+      content: "";
+      position: absolute;
+      height: 8px;
+      width: 8px;
+      background: #216fe0;
+      right: 20px;
+      top: 20px;
+      border-radius: 100%;
+      border: 3px solid #fff;
+      -webkit-box-shadow: 0px 0px 0px 2px #0066ff;
+      box-shadow: 0px 0px 0px 2px #0066ff;
+    }
+
+    .plans .plan input[type="radio"]:checked+.plan-content {
+      border: 2px solid #216ee0;
+      background: #eaf1fe;
+      -webkit-transition: ease-in 0.3s;
+      -o-transition: ease-in 0.3s;
+      transition: ease-in 0.3s;
+    }
+
+    @media screen and (max-width: 991px) {
+      .plans {
+        margin: 0 20px;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: start;
+        -ms-flex-align: start;
+        align-items: flex-start;
+        padding: 40px;
+      }
+
+      .plans .plan {
+        width: 100%;
+      }
+
+      .plan.complete-plan {
+        margin-top: 20px;
+      }
+
+      .plans .plan .plan-content .plan-details {
+        width: 70%;
+        display: inline-block;
+      }
+
+      .plans .plan input[type="radio"]:checked+.plan-content:after {
+        top: 45%;
+        -webkit-transform: translate(-50%);
+        -ms-transform: translate(-50%);
+        transform: translate(-50%);
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      .plans .plan .plan-content .plan-details {
+        width: 60%;
+        display: inline-block;
+      }
+    }
+
+    @media screen and (max-width: 540px) {
+      .plans .plan .plan-content img {
+        margin-bottom: 20px;
+        height: 56px;
+        -webkit-transition: height 0.4s;
+        -o-transition: height 0.4s;
+        transition: height 0.4s;
+      }
+
+      .plans .plan input[type="radio"]:checked+.plan-content:after {
+        top: 20px;
+        right: 10px;
+      }
+
+      .plans .plan .plan-content .plan-details {
+        width: 100%;
+      }
+
+      .plans .plan .plan-content {
+        padding: 20px;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+        align-items: baseline;
+      }
+    }
+
+    /* inspiration */
+    .inspiration {
+      font-size: 12px;
+      margin-top: 50px;
+      position: absolute;
+      bottom: 10px;
+      font-weight: 300;
+    }
+
+    .inspiration a {
+      color: #666;
+    }
+
+    @media screen and (max-width: 767px) {
+
+      /* inspiration */
+      .inspiration {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+
+    <!-- Sidebar Menu -->
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'dashboard-home' %}">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-home"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">RMS Admin</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'dashboard-home' %}">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0" />
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMessaging"
+          aria-expanded="true" aria-controls="collapseMessaging">
+          <i class="fas fa-fw fa-sms"></i>
+          <span>Messager</span>
+        </a>
+        <div id="collapseMessaging" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Messaging:</h6>
+            <a class="collapse-item" href="{% url 'contact-list' %}">
+              <i class="fas fa-fw fa-users"></i>
+              <span>Contacts</span>
+            </a>
+            <a class="collapse-item" href="{% url 'inbox' %}">
+              <i class="fas fa-fw fa-inbox"></i>
+              <span>Inbox</span>
+            </a>
+            <a class="collapse-item" href="{% url 'inbox' %}">
+              <i class="fas fa-fw fa-edit"></i>
+              <span>Drafts</span>
+            </a>
+            <a class="collapse-item" href="{% url 'inbox' %}">
+              <i class="fas fa-fw fa-archive"></i>
+              <span>Archive</span>
+            </a>
+            <a class="collapse-item" href="{% url 'inbox' %}">
+              <i class="fas fa-fw fa-trash"></i>
+              <span>Deleted Items</span>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-2" />
+
+      <!-- Heading -->
+      <div class="sidebar-heading">Leasing</div>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseApplications"
+          aria-expanded="true" aria-controls="collapseApplications">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Applications</span>
+        </a>
+        <div id="collapseApplications" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Lease Applications:</h6>
+            <a class="collapse-item" href="{% url 'application-list' %}">All lease applications</a>
+            <a class="collapse-item" href="{% url 'create-application' %}">New lease application</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Nav Item - Properties Collapse Menu -->
+      <!-- Nav Item - Lease templates Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLeaseTemplates"
+          aria-expanded="true" aria-controls="collapseLeaseTemplates">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Lease Templates</span>
+        </a>
+        <div id="collapseLeaseTemplates" class="collapse" aria-labelledby="headingUtilities"
+          data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Lease Templates:</h6>
+            <a class="collapse-item" href="utilities-color.html">All Templates</a>
+            <a class="collapse-item" href="{% url  'create-lease-template' %}">Create Template </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
+
+
+      <!-- Heading -->
+      <div class="sidebar-heading">Service Pro</div>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'service-pro-proposals' %}" aria-expanded="true">
+          <i class="fas fa-fw fa-file"></i>
+          <span>My Proposals</span>
+        </a>
+      </li>
+
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'service-pro-jobs' %}" aria-expanded="true">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Jobs</span>
+        </a>
+      </li>
+
+
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
+
+      <!-- Heading -->
+      <div class="sidebar-heading">invoicing</div>
+
+
+      <!-- Nav Item -  Buildings Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoices"
+          aria-expanded="true" aria-controls="ollapseInvoices">
+          <i class="fas fa-fw fa-file-invoice"></i>
+          <span>Invoices</span>
+        </a>
+        <div id="collapseInvoices" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">invoices:</h6>
+            <a class="collapse-item" href="{% url 'invoice-list' %}">All invoices</a>
+            <a class="collapse-item" href="{% url 'create-invoice' %}">Add new invoice</a>
+            <a class="collapse-item" href="#">Create reciept</a>
+
+
+          </div>
+        </div>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
+
+      <!-- Heading -->
+      <div class="sidebar-heading">property management</div>
+
+
+      <!-- Nav Item -  Buildings Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBuilidings"
+          aria-expanded="true" aria-controls="collapseBuilidings">
+          <i class="fas fa-fw fa-building"></i>
+          <span>Buildings</span>
+        </a>
+        <div id="collapseBuilidings" class="collapse" aria-labelledby="headingUtilities"
+          data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Buildings:</h6>
+            <a class="collapse-item" href="{% url 'building_list' %}">All buildings</a>
+            <a class="collapse-item" href="{% url 'building-create' %}">Add new building</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
+
+
+
+      <!-- Heading -->
+      <div class="sidebar-heading">service management</div>
+
+      <!-- Nav Item - Maintainance Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'service-requests' %}">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Service Requests</span>
+        </a>
+      </li>
+
+      <!-- Nav Item - Service Categories Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#serviceCategories"
+          aria-expanded="true" aria-controls="serviceCategories">
+          <i class="fas fa-fw fa-building"></i>
+          <span>Service Categories</span>
+        </a>
+        <div id="serviceCategories" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Service Categories:</h6>
+            <a class="collapse-item" href="{% url 'service-categories' %}">All</a>
+            <a class="collapse-item" href="{% url 'create-service-category' %}">New</a>
+          </div>
+        </div>
+      </li>
+
+
+      <!-- Nav Item -  Buildings Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAmenities"
+          aria-expanded="true" aria-controls="collapseAmenities">
+          <i class="fas fa-fw fa-building"></i>
+          <span>Amenities</span>
+        </a>
+        <div id="collapseAmenities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Amenities:</h6>
+            <a class="collapse-item" href="{% url 'amenity-list' %}">All amenities</a>
+            <a class="collapse-item" href="{% url 'create-amenity' %}">Add new amenity</a>
+          </div>
+        </div>
+      </li>
+      <!-- Nav Item -  Buildings Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCommunities"
+          aria-expanded="true" aria-controls="collapseCommunities">
+          <i class="fas fa-fw fa-users"></i>
+          <span>Communities</span>
+        </a>
+        <div id="collapseCommunities" class="collapse" aria-labelledby="headingUtilities"
+          data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Communities:</h6>
+            <a class="collapse-item" href="{% url 'community-list' %}">All communities</a>
+            <a class="collapse-item" href="{% url 'create-community' %}">Add new community</a>
+          </div>
+        </div>
+      </li>
+
+
+      <!-- Divider -->
+      <hr class="sidebar-divider" />
+
+      <!-- Heading -->
+      <div class="sidebar-heading">Admin</div>
+
+      <!-- Nav Item - Users Collapse Menu -->
+      <li class="nav-item">
+
+        <a class="nav-link" href="{% url 'user-list' %}" aria-expanded="true">
+          <i class="fas fa-fw fa-user-cog"></i>
+          <span>Users</span>
+        </a>
+      </li>
+
+
+      <!-- Nav Item - Users Collapse Menu -->
+      <li class="nav-item">
+
+        <a class="nav-link" href="{% url 'agent-list' %}" aria-expanded="true">
+          <i class="fas fa-fw fa-user-cog"></i>
+          <span>Agents</span>
+        </a>
+      </li>
+
+
+      <!-- Nav Item - Landlords Collapse Menu -->
+      <li class="nav-item">
+
+        <a class="nav-link" href="{%  url 'landlord-list' %}" aria-expanded="true">
+          <i class="fas fa-fw fa-user-cog"></i>
+          <span>Landlords</span>
+        </a>
+
+      </li>
+
+
+      <!-- Nav Item - Tenants Collapse Menu -->
+      <li class="nav-item">
+
+        <a class="nav-link" href="{% url 'tenant-list' %}" aria-expanded="true">
+          <i class="fas fa-fw fa-user-cog"></i>
+          <span>Tenants</span>
+        </a>
+      </li>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block" />
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center  d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+
+      <!-- Sidebar Message -->
+      <div class="sidebar-card  d-lg-flex">
+        <img class="sidebar-card-illustration mb-2" src="{% static 'dashboard_statics/img/undraw_rocket.svg' %}"
+          alt="..." />
+        <p class="text-center mb-2">
+          <strong>RMS</strong> is packed with premium features we do hope that
+          you we meet your needs. If you have any system suggestions you can
+          always contact us.
+        </p>
+        <a class="btn btn-success btn-sm" href="#">Contact Support</a>
+      </div>
+    </ul>
+    <!-- End of Sidebar -->
+    <!-- /.sidebar-menu -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                aria-label="Search" aria-describedby="basic-addon2" />
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                      aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter">3+</span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">Alerts Center</h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-donate text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 7, 2019</div>
+                    $290.29 has been deposited into your account!
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 2, 2019</div>
+                    Spending Alert: We've noticed unusually high spending for
+                    your account.
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+            </li>
+
+            <!-- Nav Item - Messages -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <!-- Counter - Messages -->
+                <span class="badge badge-danger badge-counter">7</span>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">Message Center</h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="{% static 'dashboard_statics/img/undraw_profile_1.svg' %}"
+                      alt="..." />
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">
+                      Hi there! I am wondering if you can help me with a
+                      problem I've been having.
+                    </div>
+                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="{% static 'dashboard_statics/img/undraw_profile_2.svg' %}"
+                      alt="..." />
+                    <div class="status-indicator"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">
+                      I have the photos that you ordered last month, how would
+                      you like them sent to you?
+                    </div>
+                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="{% static 'dashboard_statics/img/undraw_profile_3.svg' %}"
+                      alt="..." />
+                    <div class="status-indicator bg-warning"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">
+                      Last month's report looks great, I am very happy with
+                      the progress so far, keep up the good work!
+                    </div>
+                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="..." />
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">
+                      Am I a good boy? The reason I ask is because someone
+                      told me that people say this to all dogs, even if they
+                      aren't good...
+                    </div>
+                    <div class="small text-gray-500">
+                      Chicken the Dog · 2w
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+              </div>
+            </li>
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                <img class="img-profile rounded-circle" src="{% static 'dashboard_statics/img/undraw_profile.svg' %}" />
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          {% include 'messages.html' %}
+
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">
+              {% block header %}
+              {% endblock %}
+            </h1>
+            {% comment %} <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> {% endcomment %}
+          </div>
+
+
+
+          {% block content %}
+          {% endblock %}
+
+
+
+        </div>
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2021</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Select "Logout" below if you are ready to end your current session.
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">
+            Cancel
+          </button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'dashboard_statics/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'dashboard_statics/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+
+  <!-- Core plugin JavaScript-->
+  <script src="{% static 'dashboard_statics/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{% static 'dashboard_statics/js/sb-admin-2.min.js' %}"></script>
+
+  <!-- Page level plugins -->
+  <script src="{% static 'dashboard_statics/vendor/chart.js/Chart.min.js' %}"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="{% static 'dashboard_statics/js/demo/chart-area-demo.js' %}"></script>
+  <script src="{% static 'dashboard_statics/js/demo/chart-pie-demo.js' %}"></script>
+  <script src="{% static 'dashboard_statics/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'dashboard_statics/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'dashboard_statics/js/demo/datatables-demo.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bs-stepper/dist/js/bs-stepper.min.js"></script>
+
+
+  <!-- Template based scripts -->
+  {%block scripts%}
+  {%endblock scripts%}
+
+
+
+
+</body>
+
+</html>

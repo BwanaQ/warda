@@ -1,0 +1,47 @@
+{% extends 'base.html' %} {% comment %} Page Title {% endcomment %} 
+
+
+{% block title %} RMS - Invoice Detail {% endblock %}
+
+<!-- Page Heading -->
+{%block header %}
+<span class="border-bottom-primary">Invoice Detail</span>
+{%endblock%} 
+
+
+{% block content %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- Circle Buttons -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Invoice #{{invoice.invoice_no}} For The Month of {{invoice.month}} for {{invoice.unitlease.unit.name}}</h6>
+        </div>
+        <div class="card-body">
+            <p>Date Created:{{invoice.date_created}}</p>
+            <p>Date Paid:{{invoice.date_paid}}</p>
+            <p>Date Due:{{invoice.date_due}}</p>
+            <p>Amount:{{invoice.amount}}</p>
+            <p>Description:{{invoice.description}}</p>
+            <p>Paid:{{invoice.paid}}</p>
+
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{% url 'invoice-list' %}"><button type="button" class="btn btn-primary mr-1"><i class="far fa-list-alt"></i></button></a>
+            <a href="{% url 'update-invoice' invoice.id %}"
+              ><button type="button" class="btn btn-success mr-1">
+                <i class="fas fa-edit"></i></button
+            ></a>
+            <a href="{% url 'delete-invoice' invoice.id %}"
+              ><button type="button" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i></button
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+{%endblock%}

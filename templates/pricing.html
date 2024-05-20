@@ -1,0 +1,182 @@
+{% extends '_base.html' %} {% block content %}
+
+<main id="main">
+  <!-- ======= Intro Single ======= -->
+  <section class="intro-single">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-8">
+          <div class="title-single-box">
+            <h1 class="title-single">Pricing</h1>
+            <span class="color-text-a"
+              >Aut voluptas consequatur unde sed omnis ex placeat quis eos. Aut
+              natus officia corrupti qui autem fugit consectetur quo. Et ipsum
+              eveniet laboriosam voluptas beatae possimus qui ducimus. Et
+              voluptatem deleniti. Voluptatum voluptatibus amet. Et esse sed
+              omnis inventore hic culpa.</span
+            >
+          </div>
+        </div>
+  
+        <div class="col-md-12 col-lg-4">
+          <nav
+            aria-label="breadcrumb"
+            class="breadcrumb-box d-flex justify-content-lg-end"
+          >
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'home'%}">Home</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Pricing
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards container -->
+    <div class="container text-center" style="margin:30px;">
+      <div class="row">
+        <!-- Card #1, Starter -->
+        <div class="col-lg-3 col-md-6 col-sm-10 pb-4 d-block m-auto">
+          <div
+            class="pricing-item"
+            style="box-shadow: 0px 0px 30px -7px rgba(0, 0, 0, 0.29)"
+          >
+            <!-- Indicator of subscription type -->
+            <div class="pt-4 pb-3" style="letter-spacing: 2px">
+              <h4>Free</h4>
+            </div>
+            <!-- Price class -->
+            <div class="pricing-price pb-1 text-primary color-primary-text">
+              <h1 style="font-weight: 1000; font-size: 3.5em">
+                <span style="font-size: 20px">KSH</span>0
+              </h1>
+            </div>
+            <!-- Perks of said subscription -->
+            <div class="pricing-description">
+              <p>Everything you get with Free:</p>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="pl-3 pr-3">Listings</li>
+                <li class="pl-3 pr-3">Scheduling</li>
+                <li class="pl-3 pr-3">Applicants</li>
+                <li class="pl-3 pr-3">Screenings</li>
+                <li class="pl-3 pr-3">Rent Payments</li>
+                <li class="pl-3 pr-3">Maintenance</li>
+                <li class="pl-3 pr-3">Vendor Network</li>
+              </ul>
+            </div>
+            <!-- Button -->
+            <div class="pricing-button pb-4">
+              <button type="button" class="btn btn-lg btn-success w-75">
+                Get started
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card #2, Intermediate -->
+        <div class="col-lg-3 col-md-6 col-sm-10 pb-4 d-block m-auto">
+          <div
+            class="pricing-item"
+            style="box-shadow: 0px 0px 30px -7px rgba(0, 0, 0, 0.29)"
+          >
+            <div class="pt-4 pb-3" style="letter-spacing: 2px">
+              <h4>Starter</h4>
+            </div>
+            <div class="pricing-price pb-1 text-primary color-primary-text">
+              <h1 style="font-weight: 1000; font-size: 3.5em">
+                <span style="font-size: 20px">KSH</span>50
+              </h1>
+            </div>
+            <div class="pricing-description">
+              <p>Everything in Free, plus:</p>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="pl-3 pr-3">Premium Leads</li>
+                <li class="pl-3 pr-3">Tax Reports & More</li>
+                <li class="pl-3 pr-3">E-Signature</li>
+                <li class="pl-3 pr-3">Leads Tracking CRM</li>
+                <li class="pl-3 pr-3">Auto Pay for Tenants</li>
+                <li class="pl-3 pr-3">Google Calendar Sync</li>
+              </ul>
+            </div>
+            <div class="pricing-button pb-4">
+              <button type="button" class="btn btn-lg btn-success w-75">
+                Get started
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card #3, Professional -->
+        <div class="col-lg-3 col-md-6 col-sm-10 pb-4 d-block m-auto">
+          <div
+            class="pricing-item"
+            style="box-shadow: 0px 0px 30px -7px rgba(0, 0, 0, 0.29)"
+          >
+            <div class="pt-4 pb-3" style="letter-spacing: 2px">
+              <h4>Professional</h4>
+            </div>
+            <div class="pricing-price pb-1 text-primary color-primary-text">
+              <h1 style="font-weight: 1000; font-size: 3.5em">
+                <span style="font-size: 20px">KSH</span>125
+              </h1>
+            </div>
+            <div class="pricing-description">
+              <p>Everything in Free, plus:</p>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="pl-3 pr-3">Property Manager Tools</li>
+                <li class="pl-3 pr-3">Individual Owner Portal</li>
+                <li class="pl-3 pr-3">Management Fees</li>
+                <li class="pl-3 pr-3">Lease Builder</li>
+                <li class="pl-3 pr-3">Property Message Board</li>
+                <li class="pl-3 pr-3">QuickBooks Online Sync</li>
+              </ul>
+            </div>
+            <div class="pricing-button pb-4">
+              <button type="button" class="btn btn-lg btn-success w-75">
+                Get started
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card #4, Growth -->
+        <div class="col-lg-3 col-md-6 col-sm-10 pb-4 d-block m-auto">
+          <div
+            class="pricing-item"
+            style="box-shadow: 0px 0px 30px -7px rgba(0, 0, 0, 0.29)"
+          >
+            <div class="pt-4 pb-3" style="letter-spacing: 2px">
+              <h4>Business</h4>
+            </div>
+            <div class="pricing-price pb-1 text-primary color-primary-text">
+              <h1 style="font-weight: 1000; font-size: 3.5em">
+                <span style="font-size: 20px"></span>Custom pricing
+              </h1>
+            </div>
+            <div class="pricing-description">
+              <p>Everything in Free, plus:</p>
+              <ul class="list-unstyled mt-3 mb-4">
+                <li class="pl-3 pr-3">Team Management & Tools</li>
+                <li class="pl-3 pr-3">Task Management</li>
+                <li class="pl-3 pr-3">E-Signature</li>
+                <li class="pl-3 pr-3">Customization</li>
+              </ul>
+            </div>
+            <div class="pricing-button pb-4">
+              <button type="button" class="btn btn-lg btn-success w-75">
+                Contact Us
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Intro Single-->
+</main>
+{% endblock %}
+

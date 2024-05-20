@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+RMS - Job Detail
+{% endblock %}
+
+{%block header %}
+    <span class="border-bottom-primary">Job Detail</span>
+{%endblock%}
+
+{% comment %} Page Content {% endcomment %}
+{% block content %}
+
+<!-- Row content -->
+<div class="row">
+    <!-- Content Column -->
+    <div class="col-lg-6 mb-4">
+        <!-- Job Description -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Job Description</h6>
+            </div>
+            <div class="card-body">
+                <p>{{service_request.description}}</p>
+            </div>
+            <div class="card-footer">
+                <a
+                href="{% url 'create-proposal' service_request.id %}"
+                class="btn btn-outline-primary btn-sm b m-2 shadow shadow"
+                ><i class="fa fa-pencil"></i
+              >Send Proposal</a>
+    
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,78 @@
+
+<!--Extend from base html-->
+{% extends 'base.html' %}
+
+<!--Include Flash Messages-->
+{% include 'messages.html' %} 
+
+
+<!-- Page Title -->
+{% block title %}
+RMS - Community List
+{% endblock %}
+
+
+
+<!-- Page Heading -->
+{%block header %}
+    <span class="border-bottom-primary">Community List</span>
+{%endblock%} 
+
+<!-- Begin Page Content -->
+{% block content %}
+
+<div class="container-fluid">
+  <p class="mb-4">
+    This shows a list of all communities created in the system.
+
+  </p>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">All Communities</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for community in community_list %}
+            <tr>
+              <td>{{community.name}}</td>
+              <td>{{community.address}}</td>
+              <td >
+                {% comment %} <a href="{% url 'create_community' %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'create_community' %}" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+                <div class="btn-group" role="group" aria-label="Basic example" >
+                    <a href="{% url 'community-detail' community.id %}"><button type="button" class="btn btn-primary mr-1"><i class="far fa-eye"></i></button></a>
+                    <a href="{% url 'update-community' community.id %}"><button type="button" class="btn btn-success mr-1"><i class="fas fa-edit"></i></button></a>
+                    <a href="{% url 'delete-community' community.id %}"><button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></a>
+                </div>
+            </td>
+            {% endfor %} 
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

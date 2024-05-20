@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+
+
+{%block header %}
+    <span class="border-bottom-primary">Lease Type</span>
+{%endblock%}
+
+{% block content %}
+
+<div class="container">
+  
+  <div class="row">
+
+    <div class="col-md-8" style="margin:0px !important;">
+      
+      <form action="{% url 'create-lease-template' %}" method='post'>
+        {% csrf_token %}
+        {{wizard.management_form}}
+        <div class="plans">
+          <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+          <div class="title">What type of lease agreement is this?</div>
+
+          {% for choice in wizard.form.name %}
+          
+          <label class="plan basic-plan" for="id_leasetype-name_{{ forloop.counter0}}">
+
+            {{ choice.tag}}
+            <div class="plan-content">
+              <img loading="lazy"
+                src="https://raw.githubusercontent.com/ismailvtl/ismailvtl.github.io/master/images/life-saver-img.svg"
+                alt="" />
+              <div class="plan-details">
+                <span>{{ choice.choice_label }}</span>
+                <p>
+                  For smaller business, with simple salaries and pay schedules.
+                </p>
+              </div>
+            </div>
+          </label>
+
+          {% endfor %}
+        </div>
+        <div class="plans" style="margin-top:20px; display: block !important;max-width:60%;">
+          <div class="form-group">
+            {{ wizard.form.start_date | as_crispy_field }}
+          </div>
+      
+          <button href="#" class="btn btn-primary btn-icon-split" type="submit" value="{{ wizard.steps.first }}">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="text">Next Step</span>
+        </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-4">
+      <div class="container">
+        <div class="plans" style="margin-top: 20px; display: block !important">
+          <h3
+            style="font-family:roboto,sans-serif;font-size:16px;text-align:start;line-height:24px;letter-spacing:normal;color:#283250;">
+            Lease Types</h3>
+
+
+          <p
+            style="font-family:roboto,sans-serif;font-size:14px;text-align:start;line-height:21.98px;letter-spacing:normal;opacity:54%;color:#283250;">
+            A <span><b>Standard Lease</b></span> has a fixed term that ends on a specific date. The length of time may
+            be 6 months, 1 year, 2 years, etc. A lease agreement of 1 year or more MUST be in writing in order to comply
+            with the law in most states.
+          </p>
+
+          <p
+            style="font-family:roboto,sans-serif;font-size:14px;text-align:start;line-height:21.98px;letter-spacing:normal;opacity:54%;color:#283250;">
+            A <span><b>Month-to-Month</b></span> Lease means the lease continues for month-to-month periods until either
+            the landlord or tenant terminates the agreement</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock%} {% block scripts %}
+<script>
+  document
+    .getElementById("id_leasetype-name_0")
+    .addEventListener("click", displayDate);
+  document
+    .getElementById("id_leasetype-name_1")
+    .addEventListener("click", displayEndDate);
+
+  function displayDate() {
+    var x = document.getElementById("start_date");
+    var y = document.getElementById("end_date");
+    var z = document.getElementById("end-date-field");
+
+    if (z.classList.contains("d-none")) {
+      z.classList.remove("d-none");
+    }
+
+    if (y.classList.contains("d-none") == true) {
+      y.classList.remove("d-none");
+    }
+    if (x.classList.contains("d-none") == true) {
+      x.classList.remove("d-none");
+    }
+  }
+
+
+</script>
+
+{% endblock %}

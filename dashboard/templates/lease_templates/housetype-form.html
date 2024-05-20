@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+{% load crispy_forms_tags %}
+{% load i18n %} 
+
+
+{%block header %}
+    <span class="border-bottom-primary">Address</span>
+{%endblock%}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    
+  </div>
+  <div class="row">
+    <!-- Default Card Example -->
+
+    <div class="card mb-4 col-md-6">
+      <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+      <div class="card-subtitle">What is the type of housing?</div>
+      <div class="card-body">
+        <form action="{%url 'create-lease-template' %}" method='post'>
+            {% csrf_token %}
+            {{wizard.management_form}}
+          <div class="form-group">
+            {{ wizard.form.unit_type | as_crispy_field }}
+          </div>
+          <div class="form-group">
+            {{ wizard.form.no_of_bedrooms | as_crispy_field }}
+          </div>
+          <div class="form-group">
+            {{ wizard.form.no_of_bathrooms | as_crispy_field }}
+          </div>
+
+          <button href="#" class="btn btn-primary btn-icon-split" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-left"></i>
+            </span>
+            <span class="text">Prev Step</span>
+        </button>
+          <button href="#" class="btn btn-primary btn-icon-split" type="submit" value="{{ wizard.steps.first }}">
+            <span class="icon text-white-50">
+                <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="text">Next Step</span>
+        </button>
+        </form>
+      </div>
+    </div>
+    <div class="mb-4 col-md-5" style="margin-left:20px;">
+        <h3
+        style="font-family:roboto,sans-serif;font-size:16px;text-align:start;line-height:40px;letter-spacing:normal;color:#283250;">
+        What should you input here?</h3>
+
+
+      <p
+        style="font-family:roboto,sans-serif;font-size:14px;text-align:start;line-height:21.98px;letter-spacing:normal;opacity:54%;color:#283250;">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

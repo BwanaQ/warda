@@ -1,0 +1,43 @@
+{% extends 'base.html' %} {% comment %} Page Title {% endcomment %} 
+
+
+{% block title %} RMS - Contact Detail {% endblock %}
+
+<!-- Page Heading -->
+{%block header %}
+<span class="border-bottom-primary">Contact Detail</span>
+{%endblock%} 
+
+
+{% block content %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-6">
+      <!-- Circle Buttons -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">{{contact.first_name}} {{contact.last_name}}</h6>
+            <h6 class="m-0 font-weight-bold text-muted">{{contact.email}} - {{contact.phone}}</h6>
+        </div>
+        <div class="card-body">
+          <p>{{contact.message}}</p>
+
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{% url 'contact-list' %}"><button type="button" class="btn btn-primary mr-1"><i class="far fa-list-alt"></i></button></a>
+            <a href="{% url 'update-contact' contact.id %}"
+              ><button type="button" class="btn btn-success mr-1">
+                <i class="fas fa-edit"></i></button
+            ></a>
+            <a href="{% url 'delete-contact' contact.id %}"
+              ><button type="button" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i></button
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+{%endblock%}

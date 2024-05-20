@@ -1,0 +1,78 @@
+
+{%extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% comment %} Page Title {% endcomment %}
+{% block title %}
+RMS - Request Maintained for
+{% endblock %}
+
+{% comment %} Page Header {% endcomment %}
+{%block header %}
+    <span class="border-bottom-primary">Request Service</span>
+{%endblock%}
+
+{% comment %} Page Content {% endcomment %}
+{% block content %}
+
+<!-- Row content -->
+<div class="row">
+
+    <!-- Content Column -->
+    <div class="col-lg-6 mb-4">
+
+        <!-- Project Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Requesting service in {{building.name}} unit {{unit.name}}</h6>
+            </div>
+            <div class="card-body">
+                {% crispy form  %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mb-4">
+
+        <!-- Illustrations -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <a href="#" class="btn btn-info btn-circle">
+                    <i class="fas fa-info-circle"></i>
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;"
+                        src="{% static 'dashboard_statics/img/undraw_posting_photo.svg'%}" alt="...">
+                </div>
+                <p>Add a service request so that you let the service vendors know what they need to fix or enhance in your Unit. You will get service proposals in your notifications and choose the right vendor for your budget!
+                    <a target="_blank" rel="nofollow" href="https://undraw.co/">FAQs</a>
+              </p>
+                <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on
+                    unDraw &rarr;</a>
+            </div>
+        </div>
+
+        <!-- Approach -->
+        <!-- <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+            </div>
+            <div class="card-body">
+                <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
+                    CSS bloat and poor page performance. Custom CSS classes are used to create
+                    custom components and custom utility classes.</p>
+                <p class="mb-0">Before working with this theme, you should become familiar with the
+                    Bootstrap framework, especially the utility classes.</p>
+            </div>
+        </div> -->
+
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,81 @@
+
+<!--Extend from base html-->
+{% extends 'base.html' %}
+
+<!--Include Flash Messages-->
+{% include 'messages.html' %} 
+
+
+<!-- Page Title -->
+{% block title %}
+RMS - Invoice List
+{% endblock %}
+
+
+
+<!-- Page Heading -->
+{%block header %}
+    <span class="border-bottom-primary">Invoice List</span>
+{%endblock%} 
+
+<!-- Begin Page Content -->
+{% block content %}
+
+<div class="container-fluid">
+  <p class="mb-4">
+    This shows a list of all invoices created in the system.
+
+  </p>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">All Invoices</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered"
+          id="dataTable"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Invoice</th>
+              <th>Date Due</th>              
+              <th>Paid</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Invoice</th>
+              <th>Date Due</th>
+              <th>Paid</th>
+              <th>Action</th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for invoice in invoice_list %}
+            <tr>
+              <td>{{invoice.month}} - {{invoice.unitlease.unit.name}}</td>
+              <td>{{invoice.date_due}}</td>
+              <td>{{invoice.paid}}</td>
+              <td >
+                {% comment %} <a href="{% url 'create_invoice' %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'create_invoice' %}" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+                <div class="btn-group" role="group" aria-label="Basic example" >
+                    <a href="{% url 'invoice-detail' invoice.id %}"><button type="button" class="btn btn-primary mr-1"><i class="far fa-eye"></i></button></a>
+                    <a href="{% url 'update-invoice' invoice.id %}"><button type="button" class="btn btn-success mr-1"><i class="fas fa-edit"></i></button></a>
+                    <a href="{% url 'delete-invoice' invoice.id %}"><button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button></a>
+                </div>
+            </td>
+            {% endfor %} 
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}
