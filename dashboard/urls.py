@@ -48,6 +48,18 @@ from messager.views import (
     InboxView
 )
 
+from portfolio.views import (
+    BuildingListView,
+    BuildingCreateView,
+    BuildingUpdateView,
+    BuildingDetailView,
+    BuildingDeleteView,
+    UnitListView,
+    UnitCreateView,
+    UnitDetailView,
+    UnitUpdateView,
+    UnitDeleteView,
+)
 urlpatterns = [
     path('', home_view, name='dashboard-home'),
     path('amenity/new', AmenityCreateView.as_view(), name='create-amenity'),
@@ -55,6 +67,13 @@ urlpatterns = [
     path('amenity/list', AmenityListView.as_view(), name='amenity-list'),
     path('<int:id>/amenity/delete', AmenityDeleteView.as_view(), name='delete-amenity'),
     path('<int:pk>/amenity/detail', AmenityDetailView.as_view(), name='amenity-detail'),
+
+    path('building/new', BuildingCreateView.as_view(), name='create-building'),
+    path('<int:pk>/building/update', BuildingUpdateView.as_view(), name='update-building'),
+    path('building/list', BuildingListView.as_view(), name='building-list'),
+    path('<int:id>/building/delete', BuildingDeleteView.as_view(), name='delete-building'),
+    path('<int:pk>/building/detail', BuildingDetailView.as_view(), name='building-detail'),
+
     path('onboarding/landlord', OnboardingView.as_view(), name='onboarding'),
     path('community/new', CommunityCreateView.as_view(), name='create-community'),
     path('<int:pk>/community/update', CommunityUpdateView.as_view(), name='update-community'),

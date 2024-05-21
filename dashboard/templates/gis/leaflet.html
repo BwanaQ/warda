@@ -1,0 +1,38 @@
+{% load static %}
+
+<div id="{{ widget.attrs.id }}" style="width: {{ widget.attrs.map_width }}px; height: {{ widget.attrs.map_height }}px;"></div>
+<input type="hidden" id="{{ widget.attrs.id }}_geom" name="{{ name }}" value="{{ value|default_if_none:'' }}" />
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var map = L.map('{{ widget.attrs.id }}', {
+            attributionControl: true  // Ensure attribution control is enabled
+        }).setView([{{ widget.attrs.default_lat }}, {{ widget.attrs.default_lon }}], {{ widget.attrs.default_zoom }});
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Powered by <a href="#">RMS</a>'
+        }).addTo(map);
+
+        var marker;
+        if (document.getElementById('{{ widget.attrs.id }}_geom').value) {
+            var locationValue = document.getElementById('{{ widget.attrs.id }}_geom').value;
+            var coords = locationValue.replace('SRID=4326;POINT(', '').replace(')', '').split(' ');
+            var lon = parseFloat(coords[0]);
+            var lat = parseFloat(coords[1]);
+            marker = L.marker([lat, lon]).addTo(map);
+            map.setView([lat, lon], {{ widget.attrs.default_zoom }});
+        }
+
+        map.on('click', function(e) {
+            var coord = e.latlng;
+            var coord_str = coord.lat.toFixed(6) + ', ' + coord.lng.toFixed(6);
+            console.log('Clicked at: ' + coord_str);
+            document.getElementById('{{ widget.attrs.id }}_geom').value = 'SRID=4326;POINT(' + coord.lng + ' ' + coord.lat + ')';
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([coord.lat, coord.lng]).addTo(map);
+        });
+    });
+</script>

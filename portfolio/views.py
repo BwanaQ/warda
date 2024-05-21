@@ -21,6 +21,13 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from invoices.models import *
 from service_management.models import *
+from .forms import BuildingCreateForm, BuildingUpdateForm
+from django.http.response import HttpResponseRedirect
+
+from django.urls import reverse
+
+from django.contrib import messages
+
 
 class HomeView(View):
     """Home view"""
@@ -53,32 +60,14 @@ class BuildingListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Building.objects.filter(owner=self.request.user)
 
-class BuildingCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
-    template_name = 'buildings/building_form.html'
+class BuildingCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
+    template_name = 'buildings/building_create.html'
     model = Building
+    form_class = BuildingCreateForm
     success_url = reverse_lazy('building-list')
-    fields = ['name','description','image','location']
     success_message = "Building created successfully!"
 
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.fields['location'].widget = forms.OSMWidget(
-            
-            attrs = {
-                'map_width': 600,
-                'map_height': 400,
-                'template_name': 'gis/openlayers-osm.html',
-                'default_lat': -1.2921,
-                'default_lon': 36.8219,
-                'default_zoom': 14,
-                'map_srid':4326
-            }
-
-        )
-        return form
-
-    def form_valid(self,form):
+    def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
@@ -88,13 +77,14 @@ class BuildingCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             return True
         return False
 
-class BuildingUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+class BuildingUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Building
-    success_url = reverse_lazy('building-home')
-    fields = ['name','description','image','location']
-    success_message = "Building updated successfully!"
-
-    def form_valid(self,form):
+    form_class = BuildingUpdateForm
+    template_name = 'buildings/edit_building.html'
+    success_url = reverse_lazy('building-list')
+    success_message = "Building successfully updated!"
+    
+    def form_valid(self, form):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
@@ -179,9 +169,25 @@ class BuildingDetailView(DetailView):
 
 class BuildingDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Building
-    success_url = reverse_lazy('building-detail')
-    success_message = "The Building %(title) was deleted successfully!"
+    template_name = 'confirm_delete.html'
+    success_message = "Building successfully deleted!"
+    error_message = 'Error deleteing Building.'
+    
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(BuildingDeleteView, self).post(request, *args, **kwargs)
 
+    def get_object(self):
+        id_ = self.kwargs.get('id')
+        if not id_:
+            messages.error(self.request, self.error_message)
+        return get_object_or_404(Building, id=id_)
+
+    def get_success_url(self):
+        return reverse('building-list')
     def test_func(self):
         building = self.get_object()
         if self.request.user == building.owner:

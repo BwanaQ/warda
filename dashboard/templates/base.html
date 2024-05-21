@@ -25,7 +25,8 @@
   <link href="{% static 'dashboard_statics/css/sb-admin-2.min.css' %}" rel="stylesheet" />
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bs-stepper/dist/css/bs-stepper.min.css">
-
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>  
   <style>
     .d-none {
       display: none !important;
@@ -560,8 +561,8 @@
           data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Buildings:</h6>
-            <a class="collapse-item" href="{% url 'building_list' %}">All buildings</a>
-            <a class="collapse-item" href="{% url 'building-create' %}">Add new building</a>
+            <a class="collapse-item" href="{% url 'building-list' %}">All buildings</a>
+            <a class="collapse-item" href="{% url 'create-building' %}">Add new building</a>
           </div>
         </div>
       </li>
@@ -1007,6 +1008,8 @@
   <!-- Template based scripts -->
   {%block scripts%}
   {%endblock scripts%}
+  {% block extra_js %}
+  {% endblock extra_js %}
 
 
 

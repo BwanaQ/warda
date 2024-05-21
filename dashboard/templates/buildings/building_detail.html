@@ -1,0 +1,143 @@
+{% extends 'base.html' %} {% comment %} Page Title {% endcomment %}
+
+{% block title %} RMS - Building Detail {% endblock %}
+
+<!-- Page Heading -->
+{% block header %}
+<span class="border-bottom-primary">Building Detail</span>
+{% endblock %}
+
+{% block content %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- Circle Buttons -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h5 class="m-0 font-weight-bold text-primary">{{ building.name }}</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <h6 class="font-weight-bold text-primary">Description</h6>
+          </div>
+          <div class="row">
+            <p>{{ building.description }}</p>
+          </div>
+          <div class="row mb-4">
+            <div class="col-6">
+              <div id="map" style="height: 300px;"></div>
+            </div>
+            <div class="col-6">
+              <img src="{{building.image.url}}" alt="building" style="height: 300px; width:auto;">
+            </div>  
+          </div>
+          <div class="row mb-4">
+            <div class="col-12">
+              <h6 class="font-weight-bold text-primary">Features</h6>
+              <h6>
+                {% if building.has_parking %}
+                    <span class="badge badge-success m1">Parking</span>
+                {% endif %}
+            
+                {% if building.has_elevator %}
+                    <span class="badge badge-success m1">Elevator</span>
+                {% endif %}
+            
+                {% if building.has_garden %}
+                    <span class="badge badge-success m1">Garden</span>
+                {% endif %}
+            
+                {% if building.has_swimming_pool %}
+                    <span class="badge badge-success m1">Swimming Pool</span>
+                {% endif %}
+            
+                {% if building.has_gym %}
+                    <span class="badge badge-success m1">Gym</span>
+                {% endif %}
+            
+                {% if building.has_play_area %}
+                    <span class="badge badge-success m1">Play Area</span>
+                {% endif %}
+            </h6>
+            {% if building.has_parking_description %}
+            <div class="row">
+              <div class="col-12">
+                <h6 class="font-weight-bold text-primary">Parking Description</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <p>{{building.has_parking_description}}</p>
+              </div>
+            </div>
+            {% endif %}
+
+            {% if building.has_play_area %}
+            <div class="row">
+              <div class="col-12">
+                <h6 class="font-weight-bold text-primary">Play Area Description</h6>
+              </div>
+            </div>   
+            <div class="row">
+              <div class="col-12">
+                <p>{{building.has_play_area_description}}</p>
+              </div>
+            </div>           
+            {% endif %}
+            <div class="row">
+              <div class="col-12">
+                <h5>Owner</h5>
+              </div>
+            </div>   
+            <div class="row">
+              <div class="col-12">
+                <p>{{building.owner.first_name}} {{building.owner.last_name}}</p>
+              </div>
+            </div>   
+
+            </div>
+          </div>  
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="{% url 'building-list' %}">
+              <button type="button" class="btn btn-primary mr-1">
+                <i class="far fa-list-alt"></i>
+              </button>
+            </a>
+            <a href="{% url 'update-building' building.id %}">
+              <button type="button" class="btn btn-success mr-1">
+                <i class="fas fa-edit"></i>
+              </button>
+            </a>
+            <a href="{% url 'delete-building' building.id %}">
+              <button type="button" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<!-- Leaflet JS and CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var map = L.map('map').setView([{{ building.location.y }}, {{ building.location.x }}], 14);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: 'Powered by <a href="#">RMS</a>'
+    }).addTo(map);
+
+    L.marker([{{ building.location.y }}, {{ building.location.x }}]).addTo(map)
+      .bindPopup('<b>{{ building.name }}</b>')
+      .openPopup();
+  });
+</script>
+{% endblock %}

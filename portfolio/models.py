@@ -92,12 +92,6 @@ class Building(TimeStampedModel):
     has_play_area_description = models.TextField(blank=True, null=True)
     owner = models.ForeignKey(
         User, related_name='buildings', on_delete=models.CASCADE)
-    community = models.ForeignKey(
-        Community,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True)
-    neighbours = models.ManyToManyField(Neighbour, blank=True)
 
     def __str__(self):
         return self.name

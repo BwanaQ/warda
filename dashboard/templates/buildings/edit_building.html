@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+RMS - Edit Building
+{% endblock %}
+
+{% block header %}
+<span class="border-bottom-primary">Edit Building</span>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="o-hidden border-0 shadow-lg my-5">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="p-4">
+                    <form method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <div class="col-lg-4 mb-3 mb-sm-0">
+                            {{ form|crispy }}
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-user">Update Building</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var mapId = '{{ form.location.widget.attrs.id }}';
+        var geomField = document.getElementById(mapId + '_geom');
+        var initialValue = geomField.value;
+
+        var map = L.map(mapId).setView([{{ form.location.widget.attrs.default_lat }}, {{ form.location.widget.attrs.default_lon }}], {{ form.location.widget.attrs.default_zoom }});
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: 'Powered by <a href="#">RMS</a>'
+        }).addTo(map);
+
+        var marker;
+        if (initialValue) {
+            var coords = initialValue.replace('POINT(', '').replace(')', '').split(' ');
+            var lat = parseFloat(coords[1]);
+            var lon = parseFloat(coords[0]);
+            marker = L.marker([lat, lon]).addTo(map);
+            map.setView([lat, lon], {{ form.location.widget.attrs.default_zoom }});
+        }
+
+        map.on('click', function(e) {
+            var coord = e.latlng;
+            var coord_str = coord.lat.toFixed(6) + ', ' + coord.lng.toFixed(6);
+            console.log('Clicked at: ' + coord_str);
+            geomField.value = 'POINT(' + coord.lng + ' ' + coord.lat + ')';
+            if (marker) {
+                map.removeLayer(marker);
+            }
+            marker = L.marker([coord.lat, coord.lng]).addTo(map);
+        });
+    });
+</script>
+{% endblock %}
