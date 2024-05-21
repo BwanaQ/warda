@@ -161,4 +161,5 @@ cython_debug/
 # sandbox.py
 sandbox.py
 sandbox.html
+kitui.geojson
 # End of https://www.toptal.com/developers/gitignore/api/django
